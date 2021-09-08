@@ -53,14 +53,14 @@
           <div class="mdl-cell mdl-cell--2-col"></div>
           <div class="mdl-cell mdl-cell--4-col">
             <h5>Dimensions of the ellipsoid</h5>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="number" id="R1">
-              <label class="mdl-textfield__label" for="R1">Longitudinal radius (nm)</label>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+              <input class="mdl-textfield__input" type="number" id="Rl" value=15 onchange="updatePlot(true)">
+              <label class="mdl-textfield__label" for="Rl">Longitudinal radius (nm)</label>
             </div>
             <br>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="number" id="R2">
-              <label class="mdl-textfield__label" for="R2">Transverse radius (nm)</label>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+              <input class="mdl-textfield__input" type="number" id="Rt" value=5 onchange="updatePlot(true)">
+              <label class="mdl-textfield__label" for="Rt">Transverse radius (nm)</label>
             </div>
 
             <h5>Base material of the ellipsoid</h5>
@@ -71,16 +71,23 @@
               <label for="Ag">Silver (Ag)</label><br>
             </div>
 
-            <h5>Background medium</h5>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="number" id="em">
-              <label class="mdl-textfield__label" for="em">Medium permittivity</label>
+            <h5>Background medium permittivity</h5>
+            <!-- Slider with Starting Value -->
+            1<input type="range" min="100" max="400" value="176" tabindex="0" id="em_slider" onchange="updatePlot(true)">4
+            <br>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label has-placeholder">
+              <input class="mdl-textfield__input" type="number" id="em" onchange="updatePlot(false)">
+              <label class="mdl-textfield__label" for="em"  >Value</label>
             </div>
+
 
           </div>
           <div class="mdl-cell mdl-cell--4-col">
             <div>
-              <canvas id="absorption" width="500" height="500"></canvas>
+              <canvas id="absorption" width="250" height="250"></canvas>
+            </div>
+            <div>
+              <canvas id="cd" width="250" height="250"></canvas>
             </div>
           </div>
           <div class="mdl-cell mdl-cell--2-col"></div>
@@ -89,6 +96,7 @@
     </main>
   </div>
 
+  <script src="gold.js"></script>
   <script src="index.js"></script>
 
 </body>
