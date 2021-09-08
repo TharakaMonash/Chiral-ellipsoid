@@ -1,4 +1,4 @@
-# BasicApp
-Basic File structure for a web App
+# Ellipsoids
+To access the online version access https://tharakamonash.github.io/Chiral-ellipsoid/
 
-Edited by Tharaka
+Updated by Tharaka
