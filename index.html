@@ -73,11 +73,26 @@
 
             <h5>Background medium permittivity</h5>
             <!-- Slider with Starting Value -->
-            1<input type="range" min="100" max="400" value="176" tabindex="0" id="em_slider" onchange="updatePlot(true)">4
+            1<input type="range" min="100" max="400" value="176" tabindex="0" id="em_slider"
+              onchange="updatePlot(true)">4
             <br>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label has-placeholder">
               <input class="mdl-textfield__input" type="number" id="em" onchange="updatePlot(false)">
-              <label class="mdl-textfield__label" for="em"  >Value</label>
+              <label class="mdl-textfield__label" for="em">Value</label>
+            </div>
+
+            <h5>Chiral Material properties</h5>
+            Chiral material is modelled using the following equation.
+            <div>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                β :<input class="mdl-textfield__input" type="number" id="beeta" value=15 onchange="updatePlot(true)">
+                <!-- <label class="mdl-textfield__label" for="Rl">β</label> -->
+              </div>
+              <br>
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                γ :<input class="mdl-textfield__input" type="number" id="gamma" value=5 onchange="updatePlot(true)">
+                <!-- <label class="mdl-textfield__label" for="Rt">	γ</label> -->
+              </div>
             </div>
 
 
