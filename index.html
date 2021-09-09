@@ -4,12 +4,14 @@
 <head>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="shortcut icon" sizes="196x196" href="a1.png" />
+  <link rel="shortcut icon" sizes="196x196" href="images/a1.png" />
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml-full.min.js'></script>
+  <script src="https://unpkg.com/mathjs/lib/browser/math.js"></script>
   <title>Optical properties of Ellipsoids</title>
 </head>
 
@@ -52,7 +54,7 @@
         <div class="mdl-grid">
           <div class="mdl-cell mdl-cell--2-col"></div>
           <div class="mdl-cell mdl-cell--4-col">
-            <h5>Dimensions of the ellipsoid</h5>
+            <h5>Dimensions of an ellipsoid</h5>
             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
               <input class="mdl-textfield__input" type="number" id="Rl" value=15 onchange="updatePlot(true)">
               <label class="mdl-textfield__label" for="Rl">Longitudinal radius (nm)</label>
@@ -65,37 +67,69 @@
 
             <h5>Base material of the ellipsoid</h5>
             <div>
-              <input type="radio" class="mdl-radio__button" id="Au" name="metal" value="Au">
+              <input type="radio" class="mdl-radio__button" id="Au" name="metal" value="Au" checked="checked"
+                onchange="updatePlot(true)">
               <label for="Au">Gold (Au)</label><br>
-              <input type="radio" class="mdl-radio__button" id="Ag" name="metal" value="Ag">
+              <input type="radio" class="mdl-radio__button" id="Ag" name="metal" value="Ag" onchange="updatePlot(true)">
               <label for="Ag">Silver (Ag)</label><br>
             </div>
 
             <h5>Background medium permittivity</h5>
-            <!-- Slider with Starting Value -->
-            1<input type="range" min="100" max="400" value="176" tabindex="0" id="em_slider"
-              onchange="updatePlot(true)">4
-            <br>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label has-placeholder">
-              <input class="mdl-textfield__input" type="number" id="em" onchange="updatePlot(false)">
-              <label class="mdl-textfield__label" for="em">Value</label>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--4-col">
+                1<input type="range" min="100" max="400" value="176" tabindex="0" id="em_slider" onchange="updatePlot(true)">4
+              </div>
+              <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label has-placeholder">
+                  <input class="mdl-textfield__input" type="number" id="em" value="1.76" onchange="updatePlot(false)">
+                  <label class="mdl-textfield__label" for="em">Value</label>
+                </div>
+              </div>
             </div>
+
 
             <h5>Chiral Material properties</h5>
-            Chiral material is modelled using the following equation.
+            Chiral material is modelled using the following equations.
+            $${\varepsilon_{\mathrm{chiral}}=\varepsilon_{c0} -
+            \gamma_c\Bigg(\frac{1}{\hbar\omega-\hbar\omega_0+i\Gamma_{12}}-\frac{1}{\hbar\omega+\hbar\omega_0+i\Gamma_{12}}\Bigg)}
+            $$
+            $$ \xi_{\mathrm{chiral}}=\beta_c
+            \Bigg(\frac{1}{\hbar\omega-\hbar\omega_0+i\Gamma_{12}}+\frac{1}{\hbar\omega+\hbar\omega_0+i\Gamma_{12}}\Bigg)
+            $$
             <div>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
-                β :<input class="mdl-textfield__input" type="number" id="beeta" value=15 onchange="updatePlot(true)">
-                <!-- <label class="mdl-textfield__label" for="Rl">β</label> -->
-              </div>
-              <br>
-              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
-                γ :<input class="mdl-textfield__input" type="number" id="gamma" value=5 onchange="updatePlot(true)">
-                <!-- <label class="mdl-textfield__label" for="Rt">	γ</label> -->
+              <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--4-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                    <input class="mdl-textfield__input" type="number" id="betac" value=1e-22 onchange="updatePlot(true)">
+                    <label class="mdl-textfield__label" for="betac">β</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                    <input class="mdl-textfield__input" type="number" id="gammac" value=5e-25
+                      onchange="updatePlot(true)">
+                    <label class="mdl-textfield__label" for="gammac">γ</label>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--4-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                    <input class="mdl-textfield__input" type="number" id="lambdac0" value=625e-9
+                      onchange="updatePlot(true)">
+                    <label class="mdl-textfield__label" for="lambdac0">λ<sub>0</label>
+                  </div>
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                    <input class="mdl-textfield__input" type="number" id="tauc" value=3.5248e-20
+                      onchange="updatePlot(true)">
+                    <label class="mdl-textfield__label" for="tauc">Γ<sub>0</label>
+                  </div>
+                </div>
+                <div class="mdl-cell mdl-cell--2-col">
+                  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                    <input class="mdl-textfield__input" type="number" id="epsilonc0" value=1.5
+                      onchange="updatePlot(true)">
+                    <label class="mdl-textfield__label" for="epsilonc0">ε<sub>c0</label>
+                  </div>
+                </div>
               </div>
             </div>
-
-
           </div>
           <div class="mdl-cell mdl-cell--4-col">
             <div>
@@ -110,7 +144,7 @@
       </div>
     </main>
   </div>
-
+  <script src="js/silver.js"></script>
   <script src="js/gold.js"></script>
   <script src="js/index.js"></script>
 
