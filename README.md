@@ -1,7 +1,4 @@
 # Chiral Plasmonic Ellipsoids: An extended Mie-Gans model 
-To access the online version use the following link.
-https://tharakamonash.github.io/Chiral-ellipsoid/
-
 A short description of each file is listed below. These files are available in matlab_codes folder.
 1.	calcAbsOneEllipsoid.m : Function to calculate the absorption of a single chiral ellipsoid.
 2.	calcAbsN.m : Function to calculate the absorption of N randomly oriented chiral ellipsoids.
@@ -16,3 +13,6 @@ Ag_JC1972_lambdaMum_n_k : Refractive indices of Silver from [1].
 Au_JC1972_lambdaMum_n_k : Refractive indices of Gold from [1].
 
 [1]. P. B. Johnson and R.-W. Christy, “Optical constants of the noble metals,” Phys. review B6,4370 (1972).
+
+To access the online version use the following link.
+https://tharakamonash.github.io/Chiral-ellipsoid/

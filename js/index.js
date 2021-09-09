@@ -1,8 +1,3 @@
-// self.addEventListener('fetch', event=> {
-//     let response=fetch(event.request);
-//     event.respondWith(response);
-// });
-// Plot
 let absPlotData=[];
 let lambdaPlotRange=[];
 const data = {
@@ -57,36 +52,36 @@ function calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt)
     return abs;
 }
 
-function generatePlot(em,xi1,xi2,Rl,Rt)
+function generatePlot(em,xi1,xi2,Rl,Rt,metal)
 {
     myChart.destroy();
-    // Initialize the variables
+    let e1=0;
+    let e2=0;
     let lambda = [];
     let absData=[];
-    //let lambdaPlotRange = [];
-    // let em = 1.76;
-    // let Rl = 15;
-    // let Rt = 5;
+
     for(let i=0;i<lda0.length;i=i+1)
     {
         lambda.push(lda0[i]);
     }
-    //lambdaPlotRange=[];
-    //abs = [];
     for(let j=0;j<lambda.length;j++)
     {
-        if(lambda[j]>=400 && lambda[j]<=800)
+        if(lambda[j]>=400 && lambda[j]<=1000)
         {
-            //lambdaPlotRange.push(lambda[j]);
-            let e1 =eRealAu[j]; //Math.pow(nAu[j],2)-Math.pow(kAu[j],2);
-            let e2 =eImagAu[j];// 2*nAu[j]*kAu[j];
-            // let xi1=1;
-            // let xi2=1;
+            if(metal =='Au')
+            {
+                e1 =eRealAu[j]; 
+                e2 =eImagAu[j];
+            }
+            else if (metal =='Ag')
+            {
+                e1 =eRealAg[j]; 
+                e2 =eImagAg[j];
+            }
             absData.push(calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt));
         }
     }
     myChart.config.data.datasets[0].data=absData;
-    // myChart.update();
     myChart = new Chart(
         document.getElementById('absorption'),
         config
@@ -114,7 +109,9 @@ function updatePlot(slider)
         emScaled= em*100;
         document.getElementById('em_slider').value=emScaled;
     }
-    console.log(rTransverse);
-    console.log(rLongitude);
-    generatePlot(em,1,1,rLongitude,rTransverse); 
+
+
+    let metal=document.querySelector('input[name="metal"]:checked').value;
+    console.log(metal);
+    generatePlot(em,1,1,rLongitude,rTransverse,metal); 
 }

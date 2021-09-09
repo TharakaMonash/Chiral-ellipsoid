@@ -4,7 +4,7 @@
 <head>
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="shortcut icon" sizes="196x196" href="a1.png" />
+  <link rel="shortcut icon" sizes="196x196" href="images/a1.png" />
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
@@ -65,9 +65,9 @@
 
             <h5>Base material of the ellipsoid</h5>
             <div>
-              <input type="radio" class="mdl-radio__button" id="Au" name="metal" value="Au">
+              <input type="radio" class="mdl-radio__button" id="Au" name="metal" value="Au" checked="checked" onchange="updatePlot(true)">
               <label for="Au">Gold (Au)</label><br>
-              <input type="radio" class="mdl-radio__button" id="Ag" name="metal" value="Ag">
+              <input type="radio" class="mdl-radio__button" id="Ag" name="metal" value="Ag" onchange="updatePlot(true)">
               <label for="Ag">Silver (Ag)</label><br>
             </div>
 
@@ -110,7 +110,7 @@
       </div>
     </main>
   </div>
-
+  <script src="js/silver.js"></script>
   <script src="js/gold.js"></script>
   <script src="js/index.js"></script>
 
