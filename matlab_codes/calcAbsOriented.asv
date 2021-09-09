@@ -1,0 +1,24 @@
+function abs = calcAbsOriented(eMedium,lambda,eEllipsoid,longRadius,transRadius,chirality,N)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This function calculate the absorption of N ellipsoids based on the
+% following parameters.
+% Parameters:
+%   eMedium     : Permittivity of the background medium
+%   lambda      : wavelength as an array (in nm)
+%   eEllipsoid  : Permittivity of the ellipsoid medium
+%   longRadius  : Longitudinal radius of the ellipsoid
+%   transRadius : Transverse radius of the ellipsoid
+%   chirality   : Chirality parameter of the ellipsoid
+%   N           : Number of ellipsoids
+% Returns:
+%   AbsL         : Absorption of N ellipsoids as when excited with left
+%   polarized light
+%   AbsR         : Absorption of N ellipsoids as an array with right
+%   polarized light
+% Author: Tharaka Perera
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    AbsLlong = calcAbsOneEllipsoid2(eMedium, lambda, eEllipsoid, longRadius, transRadius, CL,-1,1/sqrt(2),1);
+    AbsRlong = calcAbsOneEllipsoid2(eMedium, lambda, eEllipsoid, longRadius, transRadius, CL,1, 1/sqrt(2),1);
+    AbsLtrans = calcAbsOneEllipsoid2(eMedium, lambda, eEllipsoid, longRadius, transRadius, CL,-1,1/sqrt(2),0);
+    AbsRtrans = calcAbsOneEllipsoid2(eMedium, lambda, eEllipsoid, longRadius, Width/2, CL,1, 1/sqrt(2),0);
+end

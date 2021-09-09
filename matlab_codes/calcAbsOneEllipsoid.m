@@ -4,7 +4,7 @@ function abs = calcAbsOneEllipsoid(eMedium,lambda,eEllipsoid,longRadius,transRad
 % following parameters.
 % Parameters:
 %   eMedium     : Permittivity of the background medium
-%   lambda      : wavelength as an array
+%   lambda      : wavelength as an array (in nm)
 %   eEllipsoid  : Permittivity of the ellipsoid medium
 %   longRadius  : Longitudinal radius of the ellipsoid
 %   transRadius : Transverse radius of the ellipsoid
@@ -14,6 +14,7 @@ function abs = calcAbsOneEllipsoid(eMedium,lambda,eEllipsoid,longRadius,transRad
 %   orientation : 1 for longitudinal ellipsoid, 0 for transverse ellipsoid.
 % Returns:
 %   abs         : Absorption of the ellipsoid as an array
+% Author: Tharaka Perera
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % Geometric factor calculation
     R = transRadius/longRadius;

@@ -11,10 +11,9 @@ function [xi_c,e_c] = calcChiralParam(lambda)
 %   e_c         : Permitivitty of chiral material
 % Author: Tharaka Perera
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % Constants
-    c_const = 299792458; % speed of light
-    hbar =1.0545718e-34; % Reduced planck's constant  
-    % Parameters that define the chiral material
+c_const = 299792458;
+       hbar =1.0545718e-34;    
+% Parameters that define the chiral material
     tau = 3.5248e-20;
     beeta_c = 1e-22;
     gamma_c = 5e-25; 

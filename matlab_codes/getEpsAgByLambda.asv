@@ -1,9 +1,10 @@
+%lambda_nm should be between 188nm and 1937nm
 function [epsRe, epsIm] = getEpsAgByLambda(lambda_nm, numInterpolationPts)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % This function calculate the permittivity of silver based on refractive
-% indices from [P. B. Johnson and R.-W. Christy, “Optical constants of the noble
+% indice
+% [P. B. Johnson and R.-W. Christy, “Optical constants of the noble
 % metals,” Phys. review B6,4370 (1972).]
-% IMPORTANT: lambda_nm should be between 188nm and 1937nm
 % following parameters.
 % Parameters:
 %   lambda_nm           : wavelength in nm as an array
@@ -13,7 +14,7 @@ function [epsRe, epsIm] = getEpsAgByLambda(lambda_nm, numInterpolationPts)
 %   epsIm         : Imaginary part of permittivity of silver
 % Author: Sudaraka Mallwaarachchi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    % JC silver refractive indices
+    % JC gold refractive index data
     refIndexMat = load('Ag_JC1972_lambdaMum_n_k.mat');
     refIndexMat = cell2mat(struct2cell(refIndexMat));
     

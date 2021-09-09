@@ -1,24 +1,31 @@
-function abs = calcAbs(eMedium,lambda,eAu,longRadius,transverseRadius,chirality,C,K,orientation)
-    R = transverseRadius/longRadius;
-    e = sqrt(1-R^2);
-    L = ((1-e^2)/e^2) * ((1/(2*e))*log((1+e)/(1-e)) - 1);
-    N = 1e+12;
-    SL= 299792458;
-    V= 4/3*pi*longRadius*transverseRadius*transverseRadius*(10^(-9))^3;
-    e1 = real(eAu);
-    e2 = imag(eAu);
-    
-    xi1 = real(chirality);
-    xi2 = imag(chirality);
-    
-    if orientation == 1%"long"
-        P = [L, (1-L)/2, (1-L)/2];
-    elseif orientation == 0%"trans"
-        P = [(1-L)/2, (1-L)/2, L];
-    end
-    temp = 0;
-    for i = 1:2
-        temp = temp + (sqrt(eMedium)*e2 - 2*C*((P(i)-1)*eMedium-P(i)*(e1+e2)).*xi1)./(((P(i)-1)*eMedium-P(i)*e1).^2+(P(i)*e2).^2);
-    end
-    abs = N*V*K^2*SL*(eMedium^(3/2))*temp./lambda;
+function [AbsL,AbsR] = calcAbsOriented(eMedium,lambda,eEllipsoid,longRadius,transRadius,chirality,theta)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This function calculate the absorption of a oriented ellipsoid based on the
+% following parameters.
+% Parameters:
+%   eMedium     : Permittivity of the background medium
+%   lambda      : wavelength as an array (in nm)
+%   eEllipsoid  : Permittivity of the ellipsoid medium
+%   longRadius  : Longitudinal radius of the ellipsoid
+%   transRadius : Transverse radius of the ellipsoid
+%   chirality   : Chirality parameter of the ellipsoid
+%   theta       : angle between the electric field propagation direction
+%   and the longitudinal axis of the ellipsoid
+% Returns:
+%   AbsL         : Absorption of an oriented ellipsoid as when excited with left polarized light
+%   AbsR         : Absorption of an oriented ellipsoid as when excited with right polarized light
+% Author: Tharaka Perera
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Absorption of a longitudinal ellipsoid with left polarized light   
+    AbsLlong = calcAbsOneEllipsoid(eMedium, lambda, eEllipsoid, longRadius, transRadius, chirality,-1,1/sqrt(2),1);
+    % Absorption of a longitudinal ellipsoid with right polarized light  
+    AbsRlong = calcAbsOneEllipsoid(eMedium, lambda, eEllipsoid, longRadius, transRadius, chirality,1, 1/sqrt(2),1);
+    % Absorption of a transverse ellipsoid with left polarized light
+    AbsLtrans = calcAbsOneEllipsoid(eMedium, lambda, eEllipsoid, longRadius, transRadius, chirality,-1,1/sqrt(2),0);
+    % Absorption of a transverse ellipsoid with right polarized light
+    AbsRtrans = calcAbsOneEllipsoid(eMedium, lambda, eEllipsoid, longRadius, transRadius, chirality,1, 1/sqrt(2),0);
+    % Absorption of a theta oriented ellipsoid with left polarized light 
+    AbsL = AbsLlong*(sind(theta))^2+AbsLtrans*(cosd(theta))^2;
+    % Absorption of a theta oriented ellipsoid with right polarized light 
+    AbsR = AbsRlong*(sind(theta))^2+AbsRtrans*(cosd(theta))^2;
 end
