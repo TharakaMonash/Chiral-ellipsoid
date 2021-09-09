@@ -65,7 +65,7 @@ set(gcf,'units','inches','position',[1,2,8,4]);
 t = tiledlayout(1,2); % Requires R2019b or later
 t.TileSpacing = 'none';
 t.Padding = 'compact';
-title(t,'Changes in chiroptical properties with background permittivity')
+title(t,'Changes in chiroptical properties with background permittivity ')
 
 nexttile
 for count=1:1:length(eMedium)
@@ -115,7 +115,6 @@ set(gcf,'units','inches','position',[4,2,8,4]);
 t = tiledlayout(1,2); % Requires R2019b or later
 t.TileSpacing = 'none';
 t.Padding = 'compact';
-title(t,'Changes in chiroptical properties with orientation')
 % Abs with orientation
 nexttile
 count =0;
@@ -176,6 +175,7 @@ a1 = axes;
 plot(width_array,long_peakL,'-ok','LineWidth',1,'DisplayName', 'Absorption' );
 hold on
 plot(width_array,long_peakCD,'-sr','LineWidth',1,'DisplayName', 'CD');
+
 leg = legend('Location','northeast');
 legend show
 set(gcf,'units','inches','position',[6,2,5,4]);
