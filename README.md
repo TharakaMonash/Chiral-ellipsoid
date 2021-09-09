@@ -2,7 +2,7 @@
 A short description of each file is listed below. These files are available in matlab_codes folder.
 1.	calcAbsOneEllipsoid.m : Function to calculate the absorption of a single chiral ellipsoid.
 2.	calcAbsN.m : Function to calculate the absorption of N randomly oriented chiral ellipsoids.
-3.	calcChiralParama.m : Function to calculate the chirality parameter of chiral material.
+3.	calcChiralParam.m : Function to calculate the chirality parameter of chiral material.
 4.	getEpsAuByLambda.m : Function to calculate the permittivity of gold.
 5.	getEpsAgByLambda.m : Function to calculate the permittivity of silver.
 6.	calcAbsOriented.m : Function to calculate the absorption of oriented chiral ellipsoid.
