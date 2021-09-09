@@ -12,6 +12,7 @@ A short description of each file is listed below. These files are available in m
 7.	template.m : A template file to run the simulations.
 
 Ag_JC1972_lambdaMum_n_k : Refractive indices of Silver from [1].
+
 Au_JC1972_lambdaMum_n_k : Refractive indices of Gold from [1].
 
 [1]. P. B. Johnson and R.-W. Christy, “Optical constants of the noble metals,” Phys. review B6,4370 (1972).
