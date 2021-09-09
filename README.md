@@ -1,4 +1,4 @@
-# Chiral Plasmonic Ellipsoids
+# Chiral Plasmonic Ellipsoids: An extended Mie-Gans model 
 To access the online version use the following link.
 https://tharakamonash.github.io/Chiral-ellipsoid/
 
