@@ -21,16 +21,50 @@ let myChart = new Chart(
     config
 );
 
+function calcChiralityReal(lambda)
+{
+    let lambdaC0=document.getElementById('lambdac0').value;
+    let gammac=document.getElementById('gammac').value;
+    let tauc=document.getElementById('tauc').value;
+    let betac=document.getElementById('betac').value;
+    let epsilonc0=document.getElementById('epsilonc0').value;
 
+    const CCONST = 299792458; // speed of light
+    const HBAR = 1.0545718e-34; // Reduced planck's constant  
+    let omega0 = 2*Math.PI*CCONST/lambdaC0;
+    let omega = CCONST*2*Math.PI*1e9/lambda;
+
+    let xireal = betac*(2*omega*HBAR* (tauc**2 + (omega-omega0)*(omega+omega0)*HBAR**2))/((tauc**2+((omega-omega)**2)* HBAR**2)*(tauc**2 +((omega+omega0)**2)*HBAR**2))
+    return xireal
+}
+
+function calcChiralityImag(lambda)
+{
+    let lambdaC0=document.getElementById('lambdac0').value;
+    let gammac=document.getElementById('gammac').value;
+    let tauc=document.getElementById('tauc').value;
+    let betac=document.getElementById('betac').value;
+    let epsilonc0=document.getElementById('epsilonc0').value;
+
+    const CCONST = 299792458; // speed of light
+    const HBAR = 1.0545718e-34; // Reduced planck's constant  
+    let omega0 = 2*Math.PI*CCONST/lambdaC0;
+    let omega = CCONST*2*Math.PI*1e9/lambda;
+
+    let xiimag = betac*tauc * (-( 1/(tauc**2 + ((omega + omega0)**2)*HBAR**2))-1/(tauc**2 + (omega*HBAR - omega0*HBAR)**2));
+
+    return xiimag
+}
 function calcGeometricFactor(Rl,Rt)
 {
     let e = Math.sqrt(1-Math.pow((Rt/Rl),2))
     let L = (1-Math.pow(e,2))/Math.pow(e,2)*((1/(2*e))*Math.log((1+e)/(1-e))-1)
     return L
 }
+
 function calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt)
 {
-    let abs=0;
+    let absL=0;
     let Lx = calcGeometricFactor(Rl,Rt);
     let Ly=(1-Lx)/2;
     let Lz=Ly;
@@ -45,20 +79,21 @@ function calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt)
         {
             let numerator=Math.pow(cs[j],2)*Math.sqrt(em)*e2+2*cs[j]*ct[j]*fs;
             let denominator=Math.pow(((ps-1)*em-ps*e1),2)+Math.pow((ps*e2),2);
-            abs += numerator/denominator;
+            absL += numerator/denominator;
         }   
     }
-    
-    return abs;
+    return absL;
 }
 
-function generatePlot(em,xi1,xi2,Rl,Rt,metal)
+function generatePlot(em,Rl,Rt,metal)
 {
     myChart.destroy();
     let e1=0;
     let e2=0;
     let lambda = [];
     let absData=[];
+
+    
 
     for(let i=0;i<lda0.length;i=i+1)
     {
@@ -78,6 +113,8 @@ function generatePlot(em,xi1,xi2,Rl,Rt,metal)
                 e1 =eRealAg[j]; 
                 e2 =eImagAg[j];
             }
+            let xi1=calcChiralityReal(lambda[j]);
+            let xi2=calcChiralityImag(lambda[j]);
             absData.push(calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt));
         }
     }
@@ -88,7 +125,7 @@ function generatePlot(em,xi1,xi2,Rl,Rt,metal)
     );
 }
 
-generatePlot(1.76,1,1,15,5);
+generatePlot(1.76,15,5,'Au');
 
 
 function updatePlot(slider)
@@ -105,7 +142,7 @@ function updatePlot(slider)
     }
     else
     {
-        em = document.getElementById("em").value;
+        em = Number(document.getElementById("em").value);
         emScaled= em*100;
         document.getElementById('em_slider').value=emScaled;
     }
@@ -113,5 +150,5 @@ function updatePlot(slider)
 
     let metal=document.querySelector('input[name="metal"]:checked').value;
     console.log(metal);
-    generatePlot(em,1,1,rLongitude,rTransverse,metal); 
+    generatePlot(em,rLongitude,rTransverse,metal); 
 }
