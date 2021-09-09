@@ -1,7 +1,7 @@
 close all;
 clear all;
 update_files=true;
-validate_results=true;
+validate_results=false;
 
 %% Analylitical Results
 lambda = 400:1:800;
