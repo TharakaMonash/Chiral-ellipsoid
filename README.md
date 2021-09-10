@@ -6,7 +6,7 @@ A short description of each file is listed below. These files are available in m
 4.	getEpsAuByLambda.m : Function to calculate the permittivity of gold.
 5.	getEpsAgByLambda.m : Function to calculate the permittivity of silver.
 6.	calcAbsOriented.m : Function to calculate the absorption of oriented chiral ellipsoid.
-7.	template.m : A template file to run the simulations.
+7.	template.m : A template file to run the simulations. [It is recommended to change the file name, before you run.]
 
 Ag_JC1972_lambdaMum_n_k : Refractive indices of Silver from [1].
 
