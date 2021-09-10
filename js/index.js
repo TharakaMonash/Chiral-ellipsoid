@@ -115,6 +115,8 @@ function generatePlot(em,Rl,Rt,metal)
             }
             let xi1=calcChiralityReal(lambda[j]);
             let xi2=calcChiralityImag(lambda[j]);
+
+            //effective medium parameters should be pushed.
             absData.push(calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt));
         }
     }
