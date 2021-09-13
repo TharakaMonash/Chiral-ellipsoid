@@ -34,7 +34,7 @@ eAg = epsAg1 + 1i*epsAg2;
 
 %Maxwell garnett to get effective medium parameters of the ellipsoid
 frac =0.05;
-eEff = eAu .*(2*frac*(-eAu+eC)+eC+2*eAu)./(eC+2*eAu-frac*(eC-eAu));
+eEff = eAu.*(2*frac*(-eAu+eC)+eC+2*eAu)./(eC+2*eAu-frac*(eC-eAu));
 xiModified = 3*frac*(xi.*eAu./(eC+2*eAu-frac*(eC-eAu)));
 
 %% Dimensions of chiral plasmonic ellipsoid
