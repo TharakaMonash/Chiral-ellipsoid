@@ -52,26 +52,34 @@
         <br>
         <br>
         <div class="mdl-grid">
-          <div class="mdl-cell mdl-cell--2-col"></div>
-          <div class="mdl-cell mdl-cell--4-col">
+          <div class="mdl-cell mdl-cell--1-col"></div>
+          <div class="mdl-cell mdl-cell--5-col">
             <h5>Dimensions of an ellipsoid</h5>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
-              <input class="mdl-textfield__input" type="number" id="Rl" value=15 onchange="updatePlot(true)">
-              <label class="mdl-textfield__label" for="Rl">Longitudinal radius (nm)</label>
+            <div class="mdl-grid">
+              <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                  <input class="mdl-textfield__input" type="number" id="Rl" value=15 onchange="updatePlot(true)">
+                  <label class="mdl-textfield__label" for="Rl">Longitudinal radius (nm)</label>
+                </div>
+              </div>
+              <div class="mdl-cell mdl-cell--4-col">
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+                  <input class="mdl-textfield__input" type="number" id="Rt" value=5 onchange="updatePlot(true)">
+                  <label class="mdl-textfield__label" for="Rt">Transverse radius (nm)</label>
+                </div>
+              </div>
             </div>
-            <br>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
-              <input class="mdl-textfield__input" type="number" id="Rt" value=5 onchange="updatePlot(true)">
-              <label class="mdl-textfield__label" for="Rt">Transverse radius (nm)</label>
-            </div>
-
             <h5>Base material of the ellipsoid</h5>
             <div>
               <input type="radio" class="mdl-radio__button" id="Au" name="metal" value="Au" checked="checked"
                 onchange="updatePlot(true)">
-              <label for="Au">Gold (Au)</label><br>
+              <label for="Au">Gold (Au)</label>
               <input type="radio" class="mdl-radio__button" id="Ag" name="metal" value="Ag" onchange="updatePlot(true)">
               <label for="Ag">Silver (Ag)</label><br>
+            </div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label  has-placeholder">
+              <input class="mdl-textfield__input" type="number" id="frac" value=0.05 onchange="updatePlot(true)">
+              <label class="mdl-textfield__label" for="frac">Chiral inclusion volume fraction</label>
             </div>
 
             <h5>Background medium permittivity</h5>
@@ -133,10 +141,10 @@
           </div>
           <div class="mdl-cell mdl-cell--4-col">
             <div>
-              <canvas id="absorption" width="250" height="250"></canvas>
+              <canvas id="absorption" width="250" height="150"></canvas>
             </div>
             <div>
-              <canvas id="cd" width="250" height="250"></canvas>
+              <canvas id="cd" width="250" height="150"></canvas>
             </div>
           </div>
           <div class="mdl-cell mdl-cell--2-col"></div>
