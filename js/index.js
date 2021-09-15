@@ -218,8 +218,10 @@ function generatePlot(em, Rl, Rt, metal) {
             let eEff = effectiveMedium(e1,e2,eC1,eC2,frac);
             let eEffR = eEff.real;
             let eEffI = eEff.imag;
+            let xiEff1 = xi1*frac;
+            let xiEff2 = xi2*frac;
             //absData.push(calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt));
-            let object = calcAbsN(em, lambda[j], eEffR, eEffI, Rl, Rt, xi1, xi2, N);
+            let object = calcAbsN(em, lambda[j], eEffR, eEffI, Rl, Rt, xiEff1, xiEff2, N);
             absLeftData.push(object.left);
             absRightData.push(object.right);
             cdData.push(object.cd);
