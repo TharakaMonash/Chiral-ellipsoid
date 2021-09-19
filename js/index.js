@@ -237,8 +237,22 @@ function generatePlot(em, Rl, Rt, metal) {
             absLeftData.push(object.left);
             absRightData.push(object.right);
             cdData.push(object.cd);
+            
         }
+        
     }
+    let absScale = Math.max(...absLeftData);
+    let cdScale = Math.max(...cdData);
+    for(let i = 0; i < absLeftData.length; i++){
+        absLeftData[i] = absLeftData[i]/absScale;
+    }
+    for(let i = 0; i < absRightData.length; i++){
+        absRightData[i] = absRightData[i]/absScale;
+    }
+    for(let i = 0; i < cdData.length; i++){
+        cdData[i] = cdData[i]/cdScale;
+    }
+
     myChart.config.data.datasets[0].data = absLeftData;
     myChart.config.data.datasets[1].data = absRightData;
     cdChart.config.data.datasets[0].data = cdData;
