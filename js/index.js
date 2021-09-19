@@ -40,13 +40,13 @@ const configAbs = {
             x: {
                 title: {
                     display: true,
-                    text: 'Wavelength'
+                    text: 'Wavelength (nm)'
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Absorption'
+                    text: 'Absorption (arb. units)'
                 }
             }
         }
@@ -61,13 +61,13 @@ const configCd = {
             x: {
                 title: {
                     display: true,
-                    text: 'Wavelength'
+                    text: 'Wavelength (nm)'
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'CD'
+                    text: 'CD (arb. units)'
                 }
             }
         }
