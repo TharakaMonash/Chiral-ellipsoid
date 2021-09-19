@@ -16,5 +16,5 @@ Au_JC1972_lambdaMum_n_k : Refractive indices of Gold from [1].
 [1]. P. B. Johnson and R.-W. Christy, “Optical constants of the noble metals,” Phys. review B6,4370 (1972).
 
 For online version, have a look at the following link. 
-https://tharakamonash.github.io/Chiral-ellipsoid/
+https://tharakamonash.github.io/Chiral-plasmonic-ellipsoids/
 
