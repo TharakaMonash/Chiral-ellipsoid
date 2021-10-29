@@ -1,0 +1,125 @@
+close all;
+clear all;
+update_files=false;
+
+colors=[         
+    0    0.4470    0.7410
+    0.8500    0.3250    0.0980
+    0.9290    0.6940    0.1250
+    0.4940    0.1840    0.5560
+    0.4660    0.6740    0.1880
+    0.3010    0.7450    0.9330
+    0.6350    0.0780    0.1840];
+linStyles = {'-o','-+','-*','-<','-s','-d','-^','-v','->','-p','-x','-h'};
+linStyles_dashes = {'--o','--+','--*','--<','--s','--d','--^','--v','-->','--p','--x','--h'};
+
+%% Analylitical Results
+lambda = 400:1:1000;
+% Au permittivity
+for j = 1:length(lambda)
+    [eps1(j), eps2(j)] =  getEpsAuByLambda(lambda(j), 10e3);
+end
+e_Au = eps1 + 1i*eps2;
+
+%Background permittivity
+e_w =1.75;%+1.75*1i;
+
+% Outer dimensions of chiral Nanorod
+Length = 30;
+Width = 10;
+NoOdEllipsoids=1e12;
+% Chirality parameter
+[CL,e_c] = calcChiralParam(lambda);
+%maxwell garnett to get effective medium parameters
+frac =0.05;
+e_eff = e_Au .*(2*frac*(-e_Au+e_c)+e_c+2*e_Au)./(e_c+2*e_Au-frac*(e_c-e_Au));
+CL_modified = 3*frac*(CL.*e_Au./(e_c+2*e_Au-frac*(e_c-e_Au)));
+
+[AbsLNA,AbsRNA]= calcAbsN(e_w, lambda, e_eff, Length/2, Width/2, CL_modified,NoOdEllipsoids);  
+CDNA = AbsRNA-AbsLNA;
+ABSscale=max(AbsLNA);
+CDscale=max(CDNA);
+
+
+e_w_array = [1.75,1.75+0.1*1i, 1.75+1i ];
+for i=1:1:length(e_w_array)
+    e_w =e_w_array(i);
+    [AbsLA,AbsRA]= calcAbsNabsorbing(e_w, lambda, e_eff, Length/2, Width/2, CL_modified,NoOdEllipsoids); 
+    CDA = AbsRA-AbsLA;
+    subplot(2,1,1)
+    kp(i)=plot(lambda, AbsLA/max(AbsLNA),linStyles{i},'color',colors(i,:),'MarkerIndices',1:50:length(lambda),'LineWidth',1,'DisplayName',strcat(char(949),'_m=',num2str(e_w)));
+    hold on
+    subplot(2,1,2)
+    hp(i)=plot(lambda, CDA/max(CDNA),linStyles{i},'color',colors(i,:),'MarkerIndices',1:50:length(lambda),'LineWidth',1,'DisplayName',strcat(char(949),'_m=',num2str(e_w)));
+    hold on
+end
+
+
+
+
+%%
+Folderpath = "..\comsol_results\absorbing_media\";
+Filenames = ["30_10.csv","30_10_absorbing.csv","30_10_abs_1i.csv"];
+
+h = zeros(1,2*length(Filenames));
+k = zeros(1,2*length(Filenames));
+
+lambda_comsol=zeros(121,length(Filenames));
+ABSL_comsol=zeros(121,length(Filenames));
+ABSR_comsol=zeros(121,length(Filenames));
+CD_comsol=zeros(121,length(Filenames));
+
+for i=1:length(Filenames)
+    Filepath = strcat(Folderpath,Filenames(i));
+    comsolResultsTable = readtable(Filepath);
+    comsolResultsArray = table2array(comsolResultsTable(1:121,1:5));
+    lambda_comsol(:,i) =comsolResultsArray(:,1).*10^9;
+    ABSL_comsol(:,i)=(2*comsolResultsArray(:,2)+comsolResultsArray(:,4))/3;
+    ABSR_comsol(:,i)=(2*comsolResultsArray(:,3)+comsolResultsArray(:,5))/3;
+    CD_comsol(:,i)=-ABSL_comsol(:,i)+ABSR_comsol(:,i);
+end
+
+ABSscale_comsol=max(max(ABSL_comsol));
+CDscale_comsol=max(max(abs(CD_comsol)));
+subplot(2,1,1)
+for i=1:1:length(Filenames)
+    plot(lambda_comsol(:,i), ABSL_comsol(:,i)/ABSscale_comsol,linStyles_dashes{i},'color',colors(i,:),'LineWidth',1,'MarkerIndices',1:10:length(lambda_comsol(:,i)));
+    hold on;
+end
+
+legend(kp(1:1:3));
+leg = legend('Location','NorthEast','NumColumns',1);
+leg.ItemTokenSize = [20,30];
+xlabel('Wavelength (nm)');
+ylabel('Absorption (arb. units)');
+legend show;
+
+
+subplot(2,1,2)
+for i=1:1:length(Filenames)
+    plot(lambda_comsol(:,i), CD_comsol(:,i)/CDscale_comsol,linStyles_dashes{i},'color',colors(i,:),'LineWidth',1,'MarkerIndices',1:10:length(lambda_comsol(:,i)));
+    hold on%,
+end
+
+legend(hp(1:1:3))
+leg = legend('Location','NorthEast','NumColumns',1)
+leg.ItemTokenSize = [20,30];
+xlabel('Wavelength (nm)');
+ylabel('CD (arb. units)');
+legend show
+
+set(gcf,'units','inches','position',[0.5,0.5,3.45,3.1])
+set(findall(gcf,'-property','FontSize'),'FontSize',9)
+set(findall(gcf,'-property','LineWidth'),'LineWidth',1)
+set(findall(gcf,'-property','FontName'),'FontName','Arial')
+
+
+subplot(2,1,1)
+set(gca,'units','inches','position',[0.4,2,2.8,1])
+text(410,0.9,'(A)')
+subplot(2,1,2)
+set(gca,'units','inches','position',[0.4,0.5,2.8,1])
+text(410,0.9,'(B)')
+set(findall(gcf,'-property','FontSize'),'FontSize',9)
+set(findall(gcf,'-property','LineWidth'),'LineWidth',1)
+set(findall(gcf,'-property','FontName'),'FontName','Arial')
