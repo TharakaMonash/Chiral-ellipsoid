@@ -40,13 +40,13 @@ const configAbs = {
             x: {
                 title: {
                     display: true,
-                    text: 'Wavelength'
+                    text: 'Wavelength (nm)'
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'Absorption'
+                    text: 'Absorption (arb. units)'
                 }
             }
         }
@@ -61,13 +61,13 @@ const configCd = {
             x: {
                 title: {
                     display: true,
-                    text: 'Wavelength'
+                    text: 'Wavelength (nm)'
                 }
             },
             y: {
                 title: {
                     display: true,
-                    text: 'CD'
+                    text: 'CD (arb. units)'
                 }
             }
         }
@@ -183,6 +183,17 @@ function effectiveMedium(e1, e2, eC1,eC2, frac) {
     return eeff;
 }
 
+function effectiveChirality(xi1, xi2, e1,e2, eC1,eC2, frac) {
+    
+    let xiEffReal = (3 *frac* (e1**2 *(2+frac) *xi1+e2* (eC2-eC2* frac+e2 *(2+frac)) *xi1+e2 *eC1 *(-1+frac) *xi2-e1* (-1+frac) *(eC1* xi1+eC2* xi2)))/((eC1**2+eC2**2)* (-1+frac)**2+e1**2 *(2+frac)**2+e2**2 *(2+frac)**2-2* e1* eC1 *(-2+frac+frac**2)-2* e2* eC2 *(-2+frac+frac**2)) ;
+    let xiEffImag = (3* frac *(e2**2 *(2+frac)* xi2-e2* (-1+frac) *(eC1 *xi1+eC2 *xi2)+e1 *(e1* (2+frac) *xi2+(-1+frac)* (eC2* xi1-eC1* xi2))))/((eC1**2+eC2**2)* (-1+frac)**2+e1**2 *(2+frac)**2+e2**2 *(2+frac)**2-2 *e1 *eC1 *(-2+frac+frac**2)-2* e2* eC2 *(-2+frac+frac**2));
+    let xiEff = {
+        real: xiEffReal,
+        imag: xiEffImag
+    };
+    return xiEff;
+}
+
 function generatePlot(em, Rl, Rt, metal) {
     myChart.destroy();
     cdChart.destroy();
@@ -216,15 +227,32 @@ function generatePlot(em, Rl, Rt, metal) {
             let frac =Number(document.getElementById('frac').value);
             //effective medium parameters should be pushed.
             let eEff = effectiveMedium(e1,e2,eC1,eC2,frac);
+            let xiEff = effectiveChirality(xi1,xi2,e1,e2,eC1,eC2,frac);
             let eEffR = eEff.real;
             let eEffI = eEff.imag;
+            let xiEff1 = xiEff.real;
+            let xiEff2 = xiEff.imag;
             //absData.push(calcAbsMieGans(em,e1,e2,xi1,xi2,Rl,Rt));
-            let object = calcAbsN(em, lambda[j], eEffR, eEffI, Rl, Rt, xi1, xi2, N);
+            let object = calcAbsN(em, lambda[j], eEffR, eEffI, Rl, Rt, xiEff1, xiEff2, N);
             absLeftData.push(object.left);
             absRightData.push(object.right);
             cdData.push(object.cd);
+            
         }
+        
     }
+    let absScale = Math.max(...absLeftData);
+    let cdScale = Math.max(...cdData);
+    for(let i = 0; i < absLeftData.length; i++){
+        absLeftData[i] = absLeftData[i]/absScale;
+    }
+    for(let i = 0; i < absRightData.length; i++){
+        absRightData[i] = absRightData[i]/absScale;
+    }
+    for(let i = 0; i < cdData.length; i++){
+        cdData[i] = cdData[i]/cdScale;
+    }
+
     myChart.config.data.datasets[0].data = absLeftData;
     myChart.config.data.datasets[1].data = absRightData;
     cdChart.config.data.datasets[0].data = cdData;
