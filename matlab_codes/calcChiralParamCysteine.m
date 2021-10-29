@@ -14,10 +14,10 @@ function [xi_c,e_c] = calcChiralParamCysteine(lambda)
     gamma_c =5e-20; %5e-25; %one used in comsol
     %gamma_c = 1e-17;
 
-    lambda0 =380e-9 %350e-9;%360e-9;%585e-9; %635e-9;
+    lambda0 =370e-9 %350e-9;%360e-9;%585e-9; %635e-9;
     w0 = hbar*2*pi*c_const/lambda0;
     f = temp*c_const.*1e9./lambda;
 
-    xi_c = beeta_c*((1./(hbar*2*pi*f-w0+1i*tau-G))+(1./(hbar*2*pi*f+w0+1i*tau-G)));
+    xi_c = beeta_c*((1./(hbar*2*pi*f-w0+1i*tau-G))+(1./(hbar*2*pi*f+w0+1i*tau-G)))+0.0028;;
     e_c = 1.5 - gamma_c*((1./(hbar*2*pi*f-w0+1i*tau-G))-(1./(hbar*2*pi*f+w0+1i*tau-G)));
 end
